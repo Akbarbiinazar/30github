@@ -1,9 +1,11 @@
+// app/screens/home.tsx
 import { Text, View } from "react-native";
 
-export const HomeScreen = () => {
+export default function HomeScreen() {
+  // ✅ Change to default export
   return (
     <View>
-      <Text>Akburito</Text>
+      <Text>Welcome to Home Screen</Text>
     </View>
   );
-};
+}

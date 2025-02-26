@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const AppNavigator = () => {
+const RegisterScreen = () => {
   return (
     <View>
-      <Text>AppNavigator</Text>
+      <Text>RegisterScreen</Text>
     </View>
   );
 };
 
-export default AppNavigator;
+export default RegisterScreen;

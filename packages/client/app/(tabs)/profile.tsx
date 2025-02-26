@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const AppNavigator = () => {
+const Profile = () => {
   return (
     <View>
-      <Text>AppNavigator</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
 
-export default AppNavigator;
+export default Profile;
