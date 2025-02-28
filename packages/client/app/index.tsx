@@ -8,11 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabsLayout from "./(tabs)/_layout";
 
 export default function IndexScreen() {
-  return (
-    <NavigationContainer>
-      <TabsLayout />
-    </NavigationContainer>
-  );
+  return <TabsLayout />;
 }
 
 const styles = StyleSheet.create({

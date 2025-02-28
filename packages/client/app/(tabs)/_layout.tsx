@@ -3,7 +3,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../(auth)/login";
 // import IndexScreen from "../index";
 import { NavigationContainer } from "@react-navigation/native";
-import { Tabs } from "expo-router";
+import { Slot, Tabs } from "expo-router";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -40,68 +40,69 @@ const Stack = createStackNavigator<RootStackParamList>();
 // };
 
 export default function TabsLayout() {
-  return (
-    <NavigationContainer>
-      <Tabs
-        screenOptions={{
-          // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          headerShown: false,
-          tabBarButton: HapticTab,
-          tabBarBackground: TabBarBackground,
-          tabBarStyle: Platform.select({
-            ios: {
-              // Use a transparent background on iOS to show the blur effect
-              position: "absolute",
-            },
-            default: {},
-          }),
+  return <Slot />;
+}
+
+{
+  /* <Tabs
+      screenOptions={{
+        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        headerShown: false,
+        tabBarButton: HapticTab,
+        tabBarBackground: TabBarBackground,
+        tabBarStyle: Platform.select({
+          ios: {
+            // Use a transparent background on iOS to show the blur effect
+            position: "absolute",
+          },
+          default: {},
+        }),
+      }}
+    >
+      <Stack.Screen></Stack>
+      <Tabs.Screen
+        name="quran"
+        options={{
+          title: "Quran",
+          // tabBarIcon: ({ color, focused }) => (
+          //   <TabIcon
+          //     icon={Icons.bookmark}
+          //     color={color}
+          //     name="Quran"
+          //     focused={focused}
+          //   />
+          // ),
         }}
-      >
-        <Tabs.Screen
-          name="quran"
-          options={{
-            title: "Quran",
-            // tabBarIcon: ({ color, focused }) => (
-            //   <TabIcon
-            //     icon={Icons.bookmark}
-            //     color={color}
-            //     name="Quran"
-            //     focused={focused}
-            //   />
-            // ),
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            // tabBarIcon: ({ color, focused }) => (
-            //   <TabIcon
-            //     icon={Icons.profile}
-            //     color={color}
-            //     name="Home"
-            //     focused={focused}
-            //   />
-            // ),
-          }}
-        />
-        <Tabs.Screen
-          name="home"
-          options={{
-            title: "Home",
-            // tabBarIcon: ({ color, focused }) => (
-            //   <TabIcon
-            //     icon={Icons.home}
-            //     color={color}
-            //     name="Home"
-            //     focused={focused}
-            //   />
-            // ),
-          }}
-        />
-      </Tabs>
-    </NavigationContainer>
-  );
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          // tabBarIcon: ({ color, focused }) => (
+          //   <TabIcon
+          //     icon={Icons.profile}
+          //     color={color}
+          //     name="Home"
+          //     focused={focused}
+          //   />
+          // ),
+        }}
+      />
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Home",
+          // tabBarIcon: ({ color, focused }) => (
+          //   <TabIcon
+          //     icon={Icons.home}
+          //     color={color}
+          //     name="Home"
+          //     focused={focused}
+          //   />
+          // ),
+        }}
+      />
+    </Tabs> */
 }
 
 // {/* <Stack.Navigator initialRouteName="Home">
