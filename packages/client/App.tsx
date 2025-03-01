@@ -1,5 +1,11 @@
-import { Slot } from "expo-router";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import TabsLayout from "./app/(tabs)/_layout";
 
 export default function App() {
-  return <Slot />;
+  return (
+    <NavigationContainer>
+      <TabsLayout />
+    </NavigationContainer>
+  );
 }
