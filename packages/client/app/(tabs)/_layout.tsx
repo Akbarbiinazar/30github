@@ -15,7 +15,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export type RootStackParamList = {
-  Index: undefined; // ✅ Add IndexScreen route
+  Index: undefined;
   Home: undefined;
   Login: undefined;
 };
