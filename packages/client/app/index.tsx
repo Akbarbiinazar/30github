@@ -6,9 +6,10 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { NavigationContainer } from "@react-navigation/native";
 import TabsLayout from "./(tabs)/_layout";
+import { Redirect } from "expo-router";
 
 export default function IndexScreen() {
-  return <TabsLayout />;
+  return <Redirect href="/(tabs)/home" />;
 }
 
 const styles = StyleSheet.create({

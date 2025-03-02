@@ -12,6 +12,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { Image, Platform, Text, View } from "react-native";
 import Icons from "@/constants/Icons";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export type RootStackParamList = {
   Index: undefined; // ✅ Add IndexScreen route
@@ -21,100 +22,65 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-// const TabIcon = ({ icon, color, name, focused }) => {
-//   return (
-//     <View className="items-center justify-center gap-2">
-//       <Image
-//         source={icon}
-//         resizeMode="contain"
-//         tintColor={color}
-//         className="w-6 h-6"
-//       />
-//       <Text
-//         className={`${focused ? "font-psembold" : "font-pregular"} text-xs`}
-//       >
-//         {name}
-//       </Text>
-//     </View>
-//   );
-// };
+const TabIcon = ({ icon, color, name, focused }) => {
+  return (
+    <View className="items-center justify-center gap-2">
+      <Image
+        source={icon}
+        resizeMode="contain"
+        tintColor={color}
+        className="w-6 h-6"
+      />
+      <Text
+        className={`${focused ? "font-psembold" : "font-pregular"} text-xs`}
+      >
+        {name}
+      </Text>
+    </View>
+  );
+};
 
 export default function TabsLayout() {
-  return <Slot />;
-}
-
-{
-  /* <Tabs
+  const colorScheme = useColorScheme();
+  return (
+    <Tabs
       screenOptions={{
-        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
       }}
     >
-      <Stack.Screen></Stack>
-      <Tabs.Screen
-        name="quran"
-        options={{
-          title: "Quran",
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabIcon
-          //     icon={Icons.bookmark}
-          //     color={color}
-          //     name="Quran"
-          //     focused={focused}
-          //   />
-          // ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabIcon
-          //     icon={Icons.profile}
-          //     color={color}
-          //     name="Home"
-          //     focused={focused}
-          //   />
-          // ),
-        }}
-      />
+      {/* Home Tab */}
       <Tabs.Screen
         name="home"
         options={{
           title: "Home",
-          // tabBarIcon: ({ color, focused }) => (
-          //   <TabIcon
-          //     icon={Icons.home}
-          //     color={color}
-          //     name="Home"
-          //     focused={focused}
-          //   />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="home" size={24} color={color} />
+          ),
         }}
       />
-    </Tabs> */
-}
 
-// {/* <Stack.Navigator initialRouteName="Home">
-//       {" "}
-//       {/* ✅ Start with Index */}
-//       {/* <NavigationContainer> */}
-//       <Stack.Screen
-//         name="Index"
-//         component={IndexScreen}
-//         options={{ headerShown: false }}
-//       />
-//       <Stack.Screen name="Home" component={HomeScreen} />
-//       <Stack.Screen name="Login" component={LoginScreen} />
-//       {/* </NavigationContainer>rr */}
-//     </Stack.Navigator> */}
+      {/* Quran Tab */}
+      <Tabs.Screen
+        name="quran"
+        options={{
+          title: "Quran",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="book" size={24} color={color} />
+          ),
+        }}
+      />
+
+      {/* More Tab */}
+      <Tabs.Screen
+        name="more"
+        options={{
+          title: "More",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="menu" size={24} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
+  );
+}
