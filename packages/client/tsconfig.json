@@ -6,7 +6,9 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "jsx": "react-jsx", 
+    "lib": ["dom", "esnext"]
   },
   "include": [
     "**/*.ts",
