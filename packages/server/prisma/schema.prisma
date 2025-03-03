@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  email          String   @unique
+  hashedPassword String
+  role           String   @default("USER") // Roles: USER, ADMIN
+  permissions    String[] // Permissions: READ, ADD, DELETE, UPDATE
+  books          Book[] // One-to-many relationship with Book
+  // likes          UserLikes[]
+  streakCount    Int      @default(0)
+  lastActive     DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Book {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  author          String
+  publicationDate DateTime
+  fileUrl         String
+  userId          String   @db.ObjectId
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Hadith {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  text        String // The text of the Hadith
+  source      String // Source of the Hadith (e.g., Sahih Bukhari)
+  explanation String // Brief explanation of the Hadith
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// model UserLikes {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId    String   @db.ObjectId
+//   sunnahId  String   @db.ObjectId
+//   user      User     @relation(fields: [userId], references: [id])
+//   sunnah    Sunnah   @relation(fields: [sunnahId], references: [id])
+//   createdAt DateTime @default(now())
+
+//   @@unique([userId, sunnahId]) // Ensure a user can only like a Sunnah once
+// }
+
+model QuranVerse {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  verse       String
+  translation String
+  tafsir      String
+  surah       String
+  ayahNumber  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
