@@ -1,6 +1,7 @@
 import {
   DarkTheme,
   DefaultTheme,
+  NavigationContainer,
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -13,13 +14,36 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Appearance } from "react-native";
 import { Colors } from "@/constants/Colors";
-import Header from "@/components/ui/Header";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import TabsLayout from "./(tabs)/_layout";
+import LoginScreen from "./(auth)/login";
+import RegisterScreen from "./(auth)/register-screen";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+const Drawer = createDrawerNavigator();
+
+function BottomTabStack() {
   const colorScheme = useColorScheme();
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+    </ThemeProvider>
+  );
+}
+
+const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -49,19 +73,14 @@ const RootLayout = () => {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false, 
-          }}
-        />
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      {/* Wrap Tabs Inside Drawer */}
+      {/* <Drawer.Screen name="Home" component={TabStack} /> */}
 
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-    </ThemeProvider>
+      <Drawer.Screen name="index" component={BottomTabStack} />
+      <Drawer.Screen name="Login" component={LoginScreen} />
+      <Drawer.Screen name="Register" component={RegisterScreen} />
+    </Drawer.Navigator>
   );
 };
 

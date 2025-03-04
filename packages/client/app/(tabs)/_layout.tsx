@@ -2,14 +2,13 @@ import { Tabs } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import TabBarIcon from "@/components/navigation/TabBarIcon";
-import Header from "@/components/ui/Header";
+import Header from "@/components/ui/TopTabsGroup";
 
 export default function TabsLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <>
-      <Header />
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,

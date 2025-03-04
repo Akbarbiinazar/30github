@@ -1,9 +1,18 @@
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+} from "react-native";
+
+import TopTabsGroup from "@/components/ui/TopTabsGroup";
 
 export default function app() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ color: "white" }}>Home Screen</Text>
+    <View >
+      <TopTabsGroup />
     </View>
   );
 }
