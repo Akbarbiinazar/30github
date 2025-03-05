@@ -77,7 +77,13 @@ const RootLayout = () => {
       {/* Wrap Tabs Inside Drawer */}
       {/* <Drawer.Screen name="Home" component={TabStack} /> */}
 
-      <Drawer.Screen name="index" component={BottomTabStack} />
+      <Drawer.Screen
+        name="index"
+        component={BottomTabStack}
+        options={{
+          title: "Home",
+        }}
+      />
       <Drawer.Screen name="Login" component={LoginScreen} />
       <Drawer.Screen name="Register" component={RegisterScreen} />
     </Drawer.Navigator>

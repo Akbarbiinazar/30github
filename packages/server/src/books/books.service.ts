@@ -30,9 +30,9 @@ export class BooksService {
     }
   }
 
-  async findAll(userId: string) {
+  async findAll() {
     const books = await this.prisma.book.findMany({
-      where: {userId},
+      where: {},
       select: {
         id: true,
         title: true, 

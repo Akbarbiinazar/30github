@@ -26,12 +26,12 @@ export class BooksController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
-  @Roles('USER', 'ADMIN')
-  @Permissions('READ_CONTENT')
-  async findAll(@Request() req) {
-    const userId = req.user.id 
-    const books = await this.booksService.findAll(userId);
+  // @UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
+  // @Roles('USER', 'ADMIN')
+  // @Permissions('READ_CONTENT')
+  async findAll() {
+    // const userId = req.user.id 
+    const books = await this.booksService.findAll();
     if (!books || books.length === 0) {
       throw new NotFoundException('No books found')
     }

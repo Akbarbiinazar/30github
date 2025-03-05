@@ -3,9 +3,21 @@ import { AppModule } from './app.module';
 import * as multer from 'multer';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  const config = new DocumentBuilder()
+    .setTitle('Quran App Api')
+    .setDescription('The quran api description')
+    .setVersion('1.0')
+    .addTag('quran')
+    .build()
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config)
+
+  SwaggerModule.setup('docs', app, documentFactory)
 
   app.use(
     multer({

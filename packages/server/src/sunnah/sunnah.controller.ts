@@ -11,18 +11,14 @@ export class SunnahController {
 
   @Get('daily')
   async getDailySunnah() {
-    return this.sunnahService.getDailyVerse();
+    return this.sunnahService.getCachedHadith();
   }
 
-  // @Post(':id/like')
+  // @Get(':id/like')
   // @UseGuards(JwtAuthGuard) // Protect the route with JWT authentication
   // async likeSunnah(@Param('id') sunnahId: string, @Request() req) {
   //   const userId = req.user.id; // Get the user ID from the JWT payload
   //   return this.sunnahService.likeSunnah(userId, sunnahId);
   // }
 
-  // @Get(':id')
-  // async getSunnah(@Param('id') sunnahId: string) {
-  //   return this.sunnahService.getDailySunnah();
-  // }
 }

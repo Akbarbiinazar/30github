@@ -41,9 +41,9 @@ model Book {
 
 model Hadith {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  text        String // The text of the Hadith
-  source      String // Source of the Hadith (e.g., Sahih Bukhari)
-  explanation String // Brief explanation of the Hadith
+  text        String 
+  source      String 
+  explanation String 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

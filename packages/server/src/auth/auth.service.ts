@@ -4,7 +4,7 @@ import { PrismaService } from 'prisma/prisma.service';
 import { Response } from 'express';
 import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt'
-import { hashPasswordSecret, jwtSecret } from 'src/utils/constants';
+import { jwtSecret } from 'src/utils/constants';
 
 
 
@@ -32,6 +32,7 @@ export class AuthService {
           hashedPassword,
           role: isAdmin ? "ADMIN" : "USER",
           permissions: isAdmin ? ['READ_CONTENT', 'ADD_BOOK', 'DELETE_BOOK', 'UPDATE_BOOK'] : ['READ_CONTENT'],
+          lastActive: new Date()
       }
   })
 

@@ -39,7 +39,13 @@ const TopTabsGroup = () => {
           },
         }}
       >
-        <TopTabs.Screen name="index" component={HomeScreen} />
+        <TopTabs.Screen
+          name="index"
+          component={HomeScreen}
+          options={{
+            title: "Home",
+          }}
+        />
         <TopTabs.Screen name="community" component={CommunityScreen} />
       </TopTabs.Navigator>
 

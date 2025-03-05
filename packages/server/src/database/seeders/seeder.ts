@@ -16,6 +16,7 @@ async function seedAdmin() {
             hashedPassword,
             role: 'ADMIN',
             permissions: ['READ_CONTENT', 'ADD_BOOK', 'DELETE_BOOK', 'UPDATE_BOOK'],
+            lastActive: new Date()
         }
     })
 
