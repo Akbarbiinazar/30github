@@ -15,8 +15,15 @@ export class SunnahService {
   }
 
   private async getAllHadiths() {
-    const url = process.env.EXTERNAL_PUBLIC_API_HADITHS;
-    const response = await firstValueFrom(this.httpService.get(url));
+    const url = process.env.EXTERNAL_PUBLIC_API_HADITH;
+    const response = await firstValueFrom(
+      this.httpService.get(url, {
+        params: {
+          apiKey: `${process.env.HADITH_API_KEY}`,
+        },
+      }),
+    );
+  
     return response.data.hadiths.data;
   }
 
