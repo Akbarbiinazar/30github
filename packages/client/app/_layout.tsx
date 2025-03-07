@@ -18,28 +18,33 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import TabsLayout from "./(tabs)/_layout";
 import LoginScreen from "./(auth)/login";
 import RegisterScreen from "./(auth)/register-screen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const Drawer = createDrawerNavigator();
 
+const client = new QueryClient();
+
 function BottomTabStack() {
   const colorScheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
+    <QueryClientProvider client={client}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
 
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-    </ThemeProvider>
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -8,6 +8,8 @@
       ]
     },
     "jsx": "react-jsx", 
+    "typeRoots": ["./node_modules/@types", "./env.d.ts"],
+    "types": ["react-native", "node"],
     "lib": ["dom", "esnext"]
   },
   "include": [

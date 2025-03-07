@@ -21,6 +21,10 @@ export class SunnahService {
         params: {
           apiKey: `${process.env.HADITH_API_KEY}`,
         },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.HADITH_API_KEY}`,
+        },
       }),
     );
   

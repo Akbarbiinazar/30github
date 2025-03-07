@@ -9,15 +9,19 @@ import { StreakModule } from './streak/streak.module';
 import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './configs/redis-options';
+import { MinioModule } from './minio/minio.module';
 
 @Module({
-  imports: [AuthModule, BooksModule,
+  imports: [
+    AuthModule, 
+    BooksModule,
     MongooseModule.forRoot(process.env.DATABASE_URL),
     CacheModule.register(RedisOptions),
     UserModule,
     SunnahModule,
     StreakModule,
-    HttpModule
+    HttpModule,
+    MinioModule
   ],
   controllers: [],
   providers: [ChatGateway],

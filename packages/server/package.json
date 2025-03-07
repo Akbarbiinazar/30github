@@ -41,6 +41,7 @@
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.7",
     "cookie-validator": "^0.0.3",
+    "minio": "^8.0.4",
     "moment-timezone": "^0.5.47",
     "mongoose": "^8.10.0",
     "passport": "^0.7.0",

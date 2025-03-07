@@ -26,6 +26,18 @@ const TopTabsGroup = () => {
       {/* <View style={[styles.tabBarContainer, { width: screenWidth * 0.3 }]}>
         
       </View> */}
+      <View style={styles.rightIcons}>
+        <View style={styles.iconsCenter}>
+          <TouchableOpacity
+            onPress={() => console.log("Notifications Pressed")}
+          >
+            <Ionicons name="notifications-outline" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name="person-circle-outline" size={30} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
       <TopTabs.Navigator
         screenOptions={{
           tabBarLabelStyle: {
@@ -48,19 +60,6 @@ const TopTabsGroup = () => {
         />
         <TopTabs.Screen name="community" component={CommunityScreen} />
       </TopTabs.Navigator>
-
-      <View style={styles.rightIcons}>
-        <View style={styles.iconsCenter}>
-          <TouchableOpacity
-            onPress={() => console.log("Notifications Pressed")}
-          >
-            <Ionicons name="notifications-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Ionicons name="person-circle-outline" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
-      </View>
     </View>
   );
 };
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     backgroundColor: "white",
+    flexDirection: "column",
   },
   rightIcons: {
     position: "absolute",

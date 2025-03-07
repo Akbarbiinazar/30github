@@ -2,18 +2,19 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, InternalSer
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import * as fs from 'fs';
-import * as path from 'path';
+// import * as fs from 'fs';
+// import * as path from 'path';
+import { MinioService } from 'src/minio/minio.service';
 
 
 @Injectable()
 export class BooksService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private minioService: MinioService) {}
 
   async create(userEmail: string, createBookDto: CreateBookDto, file: Express.Multer.File) {
     const {title, author, publicationDate} = createBookDto
 
-    const filePath = await this.saveFile(file)
+    const fileUrl = await this.minioService.uploadFile(file)
 
     try {
       return await this.prisma.book.create({
@@ -21,7 +22,7 @@ export class BooksService {
           title,
           author, 
           publicationDate,
-          fileUrl: filePath,
+          fileUrl,
           user: {connect: {email: userEmail}}
         }
       })
@@ -73,21 +74,28 @@ export class BooksService {
 
   private async saveFile(file: Express.Multer.File): Promise<string> {
     try {
-      const uploadDir = path.join(__dirname, '..', '..', 'uploads')
-      console.log(uploadDir)
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, {recursive: true})
-      }
-
-      const fileName = `${Date.now()}-${file.originalname}`
-      const filePath = path.join(uploadDir, fileName)
-
-      fs.writeFileSync(filePath, file.buffer)
-
-      return filePath
-
+     
+      const fileUrl = await this.minioService.uploadFile(file);
+      return fileUrl;  
     } catch (error) {
-      throw new InternalServerErrorException('Failed to save file')
+      throw new InternalServerErrorException('Failed to save file to MinIO');
     }
+    // try {
+    //   const uploadDir = path.join(__dirname, '..', '..', 'uploads')
+    //   console.log(uploadDir)
+    //   if (!fs.existsSync(uploadDir)) {
+    //     fs.mkdirSync(uploadDir, {recursive: true})
+    //   }
+
+    //   const fileName = `${Date.now()}-${file.originalname}`
+    //   const filePath = path.join(uploadDir, fileName)
+
+    //   fs.writeFileSync(filePath, file.buffer)
+
+    //   return filePath
+
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to save file')
+    // }
   } 
 }
