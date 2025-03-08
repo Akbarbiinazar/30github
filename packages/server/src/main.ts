@@ -1,42 +1,38 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as multer from 'multer';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
   app.enableCors({
-    origin: 'http://localhost:8081', 
+    origin: 'http://localhost:8081',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
-  
+
   const config = new DocumentBuilder()
-    .setTitle('Quran App Api')
-    .setDescription('The quran api description')
+    .setTitle('Quran App API')
+    .setDescription('The Quran API description')
     .setVersion('1.0')
     .addTag('quran')
-    .build()
+    .build();
 
-  const documentFactory = () => SwaggerModule.createDocument(app, config)
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
-  SwaggerModule.setup('docs', app, documentFactory)
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use(
-    multer({
-      dest: './uploads',
-      limits: {
-        fileSize: 10 * 1024 * 1024,
-      }
-    }).single('file')
-  )
-
-  app.useStaticAssets(join(__dirname, 'uploads'), {
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
 
   await app.listen(3000);
+  console.log(`🚀 Server is running on http://localhost:3000`);
 }
+
 bootstrap();

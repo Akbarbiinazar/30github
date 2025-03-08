@@ -10,6 +10,7 @@ import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './configs/redis-options';
 import { MinioModule } from './minio/minio.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { MinioModule } from './minio/minio.module';
     SunnahModule,
     StreakModule,
     HttpModule,
-    MinioModule
+    MinioModule,
+    FilesModule
   ],
   controllers: [],
   providers: [ChatGateway],

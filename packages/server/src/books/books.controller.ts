@@ -25,6 +25,11 @@ export class BooksController {
     return this.booksService.create(req.user.email, createBookDto, file);
   }
 
+  @Get('quran')
+  async getQuran() {
+    return this.booksService.getQuran();
+  }
+
   @Get()
   // @UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
   // @Roles('USER', 'ADMIN')

@@ -6,96 +6,88 @@ import { PrismaService } from 'prisma/prisma.service';
 // import * as path from 'path';
 import { MinioService } from 'src/minio/minio.service';
 
-
 @Injectable()
 export class BooksService {
-  constructor(private prisma: PrismaService, private minioService: MinioService) {}
+
+  constructor(private prisma: PrismaService, 
+    private minioService: MinioService) {}
 
   async create(userEmail: string, createBookDto: CreateBookDto, file: Express.Multer.File) {
-    const {title, author, publicationDate} = createBookDto
-
-    const fileUrl = await this.minioService.uploadFile(file)
+    const { title, author, publicationDate } = createBookDto;
+    const fileUrl = await this.minioService.uploadFile(file);
 
     try {
       return await this.prisma.book.create({
         data: {
           title,
-          author, 
+          author,
           publicationDate,
           fileUrl,
-          user: {connect: {email: userEmail}}
-        }
-      })
+          user: { connect: { email: userEmail } },
+        },
+      });
     } catch (error) {
       throw new BadRequestException(`Error creating book: ${error.message}`);
     }
   }
 
-  async findAll() {
-    const books = await this.prisma.book.findMany({
-      where: {},
-      select: {
-        id: true,
-        title: true, 
-        author: true, 
-        fileUrl: true,
-        publicationDate: true,
-        createdAt: true
+  async getQuran() {
+    try {
+      console.log('Fetching Quran from S3...');
+      const objects = await this.minioService.listFiles();
+      
+      if (!objects || objects.length === 0) {
+        throw new NotFoundException('Quran file not found in S3.');
       }
-    })
-
-    if (!books || books.length === 0) {
-      throw new NotFoundException('No books found')
+  
+      const quranFile = objects[0];
+      const quranUrl = await this.minioService.getFileUrl(quranFile.name);
+  
+      console.log('Quran URL:', quranUrl);
+      return { title: 'Quran', fileUrl: quranUrl };
+    } catch (error) {
+      console.error('Error fetching Quran:', error);
+      throw new InternalServerErrorException(`Failed to fetch Quran: ${error.message}`);
     }
-
-    return books
   }
 
-  findOne(id: string) {
-    return this.prisma.book.findUnique({where: {id}})
+  async findAll() {
+    const books = await this.prisma.book.findMany({
+      select: {
+        id: true,
+        title: true,
+        author: true,
+        fileUrl: true,
+        publicationDate: true,
+        createdAt: true,
+      },
+    });
+
+    if (!books || books.length === 0) {
+      throw new NotFoundException('No books found');
+    }
+
+    return books;
+  }
+
+  async findOne(id: string) {
+    const book = await this.prisma.book.findUnique({ where: { id } });
+    if (!book) throw new NotFoundException(`Book with ID ${id} not found`);
+    return book;
   }
 
   async update(id: string, updateBookDto: UpdateBookDto) {
-   
-  try {
-    return await this.prisma.book.update({
-      where: { id },
-      data: updateBookDto,
-    });
-  } catch (error) {
-    console.error('Error updating book:', error);
-    throw new HttpException(`Error updating book: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+    try {
+      return await this.prisma.book.update({
+        where: { id },
+        data: updateBookDto,
+      });
+    } catch (error) {
+      throw new HttpException(`Error updating book: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     return this.prisma.book.delete({ where: { id } });
   }
-
-  private async saveFile(file: Express.Multer.File): Promise<string> {
-    try {
-     
-      const fileUrl = await this.minioService.uploadFile(file);
-      return fileUrl;  
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to save file to MinIO');
-    }
-    // try {
-    //   const uploadDir = path.join(__dirname, '..', '..', 'uploads')
-    //   console.log(uploadDir)
-    //   if (!fs.existsSync(uploadDir)) {
-    //     fs.mkdirSync(uploadDir, {recursive: true})
-    //   }
-
-    //   const fileName = `${Date.now()}-${file.originalname}`
-    //   const filePath = path.join(uploadDir, fileName)
-
-    //   fs.writeFileSync(filePath, file.buffer)
-
-    //   return filePath
-
-    // } catch (error) {
-    //   throw new InternalServerErrorException('Failed to save file')
-    // }
-  } 
 }
