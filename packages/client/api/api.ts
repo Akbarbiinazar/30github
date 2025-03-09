@@ -17,3 +17,8 @@ export const fetchDailySunnah = async () => {
     const response = await api.get('/sunnah/daily')
     return response.data
 }
+
+export const fetchQuranEpub = async (fileName: string) => {
+    const response = await api.get(`/files/file-url/${fileName}`)
+    return response
+}

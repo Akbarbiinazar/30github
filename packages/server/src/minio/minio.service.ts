@@ -14,8 +14,8 @@ export class MinioService {
       endPoint: this.configService.get<string>('MINIO_ENDPOINT'),
       port: parseInt(this.configService.get<string>('MINIO_PORT')) || 9000,
       useSSL: false,
-      accessKey: this.configService.get<string>('MINIO_ACCESS_KEY_ID'),
-      secretKey: this.configService.get<string>('MINIO_SECRET_ACCESS_KEY'),
+      accessKey: this.configService.get<string>('MINIO_ACCESS_KEY'),
+      secretKey: this.configService.get<string>('MINIO_SECRET_KEY'),
     });
 
     console.log('🚀 MinIO Client Configured:', {

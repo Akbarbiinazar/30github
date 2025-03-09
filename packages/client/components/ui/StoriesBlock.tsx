@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
+    // overflowX: "scroll",
   },
   card: {
     backgroundColor: "#f9f9f9",

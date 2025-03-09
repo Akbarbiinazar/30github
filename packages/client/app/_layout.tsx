@@ -19,6 +19,7 @@ import TabsLayout from "./(tabs)/_layout";
 import LoginScreen from "./(auth)/login";
 import RegisterScreen from "./(auth)/register-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { LogProvider } from '@expo/logs';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -30,6 +31,7 @@ const client = new QueryClient();
 function BottomTabStack() {
   const colorScheme = useColorScheme();
   return (
+    // <LogProvider>
     <QueryClientProvider client={client}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
@@ -45,6 +47,7 @@ function BottomTabStack() {
         <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
       </ThemeProvider>
     </QueryClientProvider>
+    // </LogProvider>
   );
 }
 

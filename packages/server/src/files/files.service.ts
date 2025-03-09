@@ -40,11 +40,10 @@ export class FilesService {
     try {
       const filename = `${randomUUID()}-${file.originalname}`;
 
-      // Ensure the bucket exists before uploading
       const bucketExists = await this.minioService.bucketExists(this._bucketName);
       if (!bucketExists) {
         console.warn(`Bucket ${this._bucketName} does not exist. Creating...`);
-        await this.minioService.makeBucket(this._bucketName, 'us-east-1'); // Change region if needed
+        await this.minioService.makeBucket(this._bucketName, process.env.MINIO_REGION); 
       }
 
       await this.minioService.putObject(
