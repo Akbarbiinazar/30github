@@ -82,9 +82,6 @@ const RootLayout = () => {
 
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
-      {/* Wrap Tabs Inside Drawer */}
-      {/* <Drawer.Screen name="Home" component={TabStack} /> */}
-
       <Drawer.Screen
         name="index"
         component={BottomTabStack}
